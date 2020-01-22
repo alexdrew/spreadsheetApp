@@ -1,0 +1,24 @@
+{
+  "name": "awww_sheeet",
+  "version": "1.0.0",
+  "description": "cloud based spreadsheet solution",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon ./src/server/server.js"
+  },
+  "author": "alex drew",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.41.5",
+    "webpack-dev-server": "^3.10.1",
+    "nodemon": "^2.0.2",
+    "react": "^16.12.0",
+    "redux": "^4.0.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.9"
+  }
+}
