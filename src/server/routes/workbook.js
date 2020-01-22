@@ -5,49 +5,65 @@ const workbookController = require('../controllers/workbookController');
 
 const workbook = express.Router();
 
-// create
-workbook.post(
-  '/',
-  workbookController.createWorkbook,
-  (req, res) => {
+const respondWithWorkbook = (req, res) => {
+  let response;
+
+  if (res.locals.workbook) {
     const {
       data, _id, name, owner,
     } = res.locals.workbook;
-    res.send({
+    response = {
       data,
       _id,
       name,
       owner,
-    });
-  },
+    };
+  }
+
+  return res.json(response);
+};
+
+// get all workbooks for requested user
+workbook.get(
+  '/toc',
+  // TODO: STRETCH...Add auth check
+  workbookController.getAllWorkbooks,
+  (req, res) => res.json(res.locals.workbooks),
+);
+
+// create
+workbook.post(
+  '/',
+  // TODO: STRETCH...Add auth check
+  workbookController.createWorkbook,
+  respondWithWorkbook,
 );
 
 // read
 workbook.get(
-  '/',
+  '/:workbookId',
+  // TODO: STRETCH...Add auth check
   workbookController.readWorkbook,
-  (req, res, next) => {
-    console.log('workbook - get request');
-    next();
-  },
-  (req, res) => res.json(res.locals.workbook),
+  respondWithWorkbook,
 );
 
 // udpate
 workbook.patch(
-  '/',
-  (req, res) => {
-    res.send('hello from sheets :)');
-  },
+  '/:workbookId',
+  // TODO: STRETCH...Add auth check
+  workbookController.updateWorkbook,
+  workbookController.readWorkbook,
+  respondWithWorkbook,
 );
 
 // delete
+// TODO: Write Me!!!!!
 workbook.delete(
-  '/',
-  (req, res) => {
-    res.send('hello from sheets :)');
-  },
+  '/:workbookId',
+  // TODO: STRETCH...Add auth check
+  workbookController.deleteWorkbook,
+  workbookController.getAllWorkbooks,
+  (req, res) => res.json(res.locals.workbooks),
 );
 
 module.exports = workbook;
-// export default sheets;

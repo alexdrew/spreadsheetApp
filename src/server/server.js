@@ -10,13 +10,24 @@ const PORT = 3000;
 
 app.use(bodyParser.json());
 
+// Testing console.log
+// app.use((req, res, next) => {
+//   console.log('req.params: ', req.params);
+//   console.log('req.header: ', req.headers);
+//   console.log('req.body: ', req.body);
+//   console.log('req.url: ', req.url);
+//   console.log('');
+//   next();
+// });
+
 app.use('/workbook', workbook);
+
 
 app.use(
   '/',
   (req, res) => {
     console.log('get request');
-    res.status(200).send('hello world');
+    return res.status(200).send('hello world from base server "/"');
   },
 );
 
