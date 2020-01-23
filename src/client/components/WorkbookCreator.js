@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 // ? Get jsx attributes off event
 
 /* eslint-disable no-underscore-dangle */
@@ -107,6 +108,7 @@ class WorkbookCreator extends Component {
       <div className="workbook-creator grid-container">
         <h3>Workbook Creator</h3>
         <form onSubmit={createNewWorkbook}>
+          // eslint-disable-next-line jsx-a11y/label-has-associated-control
           <label htmlFor="workbookName">Enter workbook name: </label>
           <input id="workbookName" name="workbookName" type="text" />
           <span>    </span>
