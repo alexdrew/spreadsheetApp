@@ -24,9 +24,9 @@ export const setOpenWorkbook = (workbookId, data) => {
 };
 
 // Update one
-export const updateWorkbook = (workbookId, data, index) => ({
+export const updateWorkbook = (workbookId, value, index) => ({
   type: types.UPDATE_DATA,
-  payload: { workbookId, data, index },
+  payload: { workbookId, value, index },
 });
 
 // Delete one

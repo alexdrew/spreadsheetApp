@@ -20,7 +20,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   // Update one
   updateWorkbook: (workbookId, value, index) => (
-    dispatch(workbookActions.updateWorkbook(workbookId, data))
+    dispatch(workbookActions.updateWorkbook(workbookId, value, index))
   ),
 });
 
@@ -93,7 +93,7 @@ class WorkbookContainer extends Component {
       );
       for (let i = 0; i < 100; i += 1) {
         let textValue = '';
-        if (activeWorkbookData[i]) textValue = activeWorkbookData[i];
+        textValue = activeWorkbookData[i];
 
         spreadsheetCells.push(
           <input
@@ -103,7 +103,10 @@ class WorkbookContainer extends Component {
             value={textValue}
             onChange={(event) => {
               event.preventDefault();
-              console.log('edit to cell');
+              // console.log('edit to cell');
+              // console.log(event.target.value);
+              // console.log(event.target.getAttribute('cellNum'));
+              updateWorkbook(activeWorkbook, event.target.value, event.target.getAttribute('cellNum'));
             }}
           />,
         );
