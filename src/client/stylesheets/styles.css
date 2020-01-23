@@ -4,6 +4,26 @@
   justify-content: center;
 }
 
+.toc-table {
+  background-color: lightblue;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0px 100px;
+  border-radius: 3px;
+}
+
+.toc-buttons {
+  text-align: right;
+  border: 1px, solid, darkblue;
+}
+
+.workbook-cell {
+  width: 100px;
+}
+
+.workbook-sheet {
+  grid-template-columns: repeat(10, max-content);
+}
+
 h1 {
   text-align: center;
 }

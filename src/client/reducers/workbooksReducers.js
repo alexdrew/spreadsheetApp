@@ -2,15 +2,19 @@ import * as types from '../constants/workbookTypes';
 
 const initialState = {
   user: '',
-  tableOfContents: [],
-  data: [],
 
   newWorkBookName: '',
   newWorkBookOwner: '',
+
+  tableOfContents: [],
+
+  activeWorkbook: '',
+  activeWorkbookData: [],
+  activeWorkBookUserDefinedName: '',
 };
 
 const workbooksReducer = (state = initialState, action) => {
-  let newState;
+  const newState = JSON.parse(JSON.stringify(state));
 
   switch (action.type) {
     // Read all
@@ -18,18 +22,37 @@ const workbooksReducer = (state = initialState, action) => {
       const { data } = action.payload;
       // console.log('Reducer: ', data);
       // console.log(`${types.GET_TOC}, not coded`);
-      newState = JSON.parse(JSON.stringify(state));
       newState.tableOfContents = data;
       break;
     }
     // create one
-    case types.POST_NEW_WORKBOOK: {
-      console.log(`${types.POST_NEW_WORKBOOK}, not coded`);
+    case types.UPDATE_DATA: {
+      const { value, index } = action.payload;
+      // console.log(`${types.POST_NEW_WORKBOOK}, not coded`);
+      newState.activeWorkbookData[index] = value;
       break;
     }
     // Read one
-    case types.GET_WORKBOOK: {
-      console.log(`${types.POST_NEW_WORKBOOK}, not coded`);
+    case types.SET_OPEN_WORKBOOK: {
+      // console.log(`${types.POST_NEW_WORKBOOK}, not coded`);
+      console.log('action payload: ', action.payload);
+      const { activeWorkbook } = state;
+      const { workbookId, data } = action.payload;
+
+      console.log(data);
+
+      // console.log('active: ', activeWorkBook);
+      // console.log('passed in: ', workbookId);
+
+      if (activeWorkbook === workbookId) {
+        newState.activeWorkbook = '';
+        newState.activeWorkbookData = [];
+        newState.activeWorkBookUserDefinedName = '';
+      } else {
+        newState.activeWorkbook = workbookId;
+        newState.activeWorkbookData = data.data;
+        newState.activeWorkBookUserDefinedName = data.name;
+      }
       break;
     }
     // Update
@@ -42,10 +65,13 @@ const workbooksReducer = (state = initialState, action) => {
       console.log(`${types.DELETE_WORKBOOK}, not coded`);
       break;
     }
-    default:
-      newState = state;
+    default: {
+      // newState = state;
+      // console.log('Default reducer triggered');
+    }
   }
   // console.log('reducer finished');
+  // console.log(newState);
   return newState;
 };
 

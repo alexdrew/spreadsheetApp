@@ -14,15 +14,19 @@ export const newWorkbook = (userName, workbookName) => ({
 });
 
 // Read one
-export const openWorkbook = (workbookId) => ({
-  type: types.GET_WORKBOOK,
-  payload: { workbookId },
-});
+export const setOpenWorkbook = (workbookId, data) => {
+  console.log('ID: ', workbookId);
+  console.log('Data: ', data);
+  return {
+    type: types.SET_OPEN_WORKBOOK,
+    payload: { workbookId, data },
+  };
+};
 
 // Update one
-export const updateWorkbook = (workbookId, data) => ({
-  type: types.PATCH_WORKBOOK,
-  payload: { workbookId, data },
+export const updateWorkbook = (workbookId, data, index) => ({
+  type: types.UPDATE_DATA,
+  payload: { workbookId, data, index },
 });
 
 // Delete one

@@ -15,7 +15,7 @@ workbookController.getAllWorkbooks = (req, res, next) => {
     {
       user: req.body.user,
     },
-    '_id name owner data',
+    'data _id name owner',
     (err, queryResponse) => {
       if (err) {
         console.log('error occured :( \n', err.message, '\n', err.stack);

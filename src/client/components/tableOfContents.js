@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -11,6 +12,7 @@ import * as workbookActions from '../actions/workbookActions';
 // map state to props
 const mapStateToProps = (state) => ({
   tableOfContents: state.workbookReducer.tableOfContents,
+  activeWorkbook: state.workbookReducer.activeWorkbook,
 });
 
 // map dispatch to props
@@ -23,9 +25,8 @@ const mapDispatchToProps = (dispatch) => ({
   newWorkbook: (userName, workbookName) => (
     dispatch(workbookActions.newWorkbook(userName, workbookName))
   ),
-  // Read one
-  openWorkbook: (workbookId) => (
-    dispatch(workbookActions.openWorkbook(workbookId))
+  setOpenWorkbook: (workbookId, data) => (
+    dispatch(workbookActions.setOpenWorkbook(workbookId, data))
   ),
   // Update one
   updateWorkbook: (workbookId, data) => (
@@ -44,11 +45,12 @@ class TableOfContents extends Component {
   constructor(props) {
     super(props);
     this.componentDidMount.bind(this);
+    this.userName = 'Alex';
   }
 
   componentDidMount() {
     const { updateTableOfContents } = this.props;
-    const userName = 'Alex';
+    const { userName } = this;
 
     // console.log(workbookActions.getTableOfContents(userName));
     fetch('/workbook/toc')
@@ -59,34 +61,74 @@ class TableOfContents extends Component {
       });
   }
 
+  setActiveWorkbook(workbookId) {
+    // console.log('opening ', workbookId);
+    const { setOpenWorkbook } = this.props;
+
+    const url = `/workbook/${workbookId}`;
+    fetch(url, {
+      method: 'GET',
+    })
+      .then(data => data.json())
+      .then(data => {
+        console.log(data);
+        const workbookData = data;
+        console.log('Workbook Data: ', workbookData);
+        setOpenWorkbook(workbookId, workbookData);
+      });
+  }
+
+  deleteWorkbook(workbookId) {
+    console.log('deleting ', workbookId);
+    const { updateTableOfContents } = this.props;
+    const { userName } = this;
+
+    const url = `/workbook/${workbookId}`;
+    fetch(url, {
+      method: 'DELETE',
+    })
+      .then(data => data.json())
+      .then(data => {
+      // console.log(data);
+        updateTableOfContents(userName, data);
+      });
+  }
+
   render() {
     const { tableOfContents } = this.props;
-    console.log('rendering');
-    console.log(tableOfContents);
-    console.log('TOC Length: ', tableOfContents.length);
+    const tableOfContentsCells = [];
+    const length = tableOfContents ? tableOfContents.length : 0;
 
-    const tableOfContentsCells = [1, 2, 3];
-
-    // console.log(this.props);
-    // console.log(tableOfContents);
-
-    for (let i = 0; i < tableOfContents.length; i += 1) {
+    for (let i = 0; i < length; i += 1) {
       const currentWorkbook = tableOfContents[i];
-      console.log('ABC');
-      tableOfContentsCells.push(<div>{currentWorkbook.name}</div>);
-      // tableOfContentsCells.push(
-      //   <div>
-      //     <button onClick={}></button>
-
-      //   </div>
-      // );
+      tableOfContentsCells.push(
+        <div key={`${currentWorkbook._id}_workBookName`}>
+          {currentWorkbook.name}
+        </div>,
+      );
+      tableOfContentsCells.push(
+        <div className="toc-buttons" key={`${currentWorkbook._id}_buttons`}>
+          <button
+            onClick={() => this.setActiveWorkbook(currentWorkbook._id)}
+            key={`${currentWorkbook._id}_editButton`}
+          >
+            Edit
+          </button>
+          <span>  </span>
+          <button
+            onClick={() => this.deleteWorkbook(currentWorkbook._id)}
+            key={`${currentWorkbook._id}_deleteButton`}
+          >
+            Delete
+          </button>
+        </div>,
+      );
     }
 
     return (
-      <div className="toc-container">
-        <h3>Table Of Contents</h3>
-        <hr />
-        <div className="toc-rows">
+      <div className="toc-container grid-container">
+        <h3 key="toc-header">Table Of Contents</h3>
+        <div key="toc-table" className="toc-table grid-container">
           {tableOfContentsCells}
         </div>
       </div>
