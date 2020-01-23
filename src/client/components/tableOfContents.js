@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // import * as TYPES from '../constants/actionTypes';
+// import workbooksReducer from '../reducers/workbooksReducers';
 import * as workbookActions from '../actions/workbookActions';
-import workbooksReducer from '../reducers/workbooksReducers';
 
 // import from child components...
 
@@ -54,20 +54,40 @@ class TableOfContents extends Component {
     fetch('/workbook/toc')
       .then(data => data.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         updateTableOfContents(userName, data);
       });
   }
 
   render() {
-    const tableOfContentsRows = [];
+    const { tableOfContents } = this.props;
+    console.log('rendering');
+    console.log(tableOfContents);
+    console.log('TOC Length: ', tableOfContents.length);
+
+    const tableOfContentsCells = [1, 2, 3];
+
+    // console.log(this.props);
+    // console.log(tableOfContents);
+
+    for (let i = 0; i < tableOfContents.length; i += 1) {
+      const currentWorkbook = tableOfContents[i];
+      console.log('ABC');
+      tableOfContentsCells.push(<div>{currentWorkbook.name}</div>);
+      // tableOfContentsCells.push(
+      //   <div>
+      //     <button onClick={}></button>
+
+      //   </div>
+      // );
+    }
 
     return (
       <div className="toc-container">
         <h3>Table Of Contents</h3>
         <hr />
         <div className="toc-rows">
-          {tableOfContentsRows}
+          {tableOfContentsCells}
         </div>
       </div>
     );
