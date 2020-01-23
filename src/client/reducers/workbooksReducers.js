@@ -10,7 +10,7 @@ const initialState = {
 
   activeWorkbook: '',
   activeWorkbookData: [],
-  activeWorkBookUserDefinedName: '',
+  activeWorkbookUserDefinedName: '',
 };
 
 const workbooksReducer = (state = initialState, action) => {
@@ -47,11 +47,11 @@ const workbooksReducer = (state = initialState, action) => {
       if (activeWorkbook === workbookId) {
         newState.activeWorkbook = '';
         newState.activeWorkbookData = [];
-        newState.activeWorkBookUserDefinedName = '';
+        newState.activeWorkbookUserDefinedName = '';
       } else {
         newState.activeWorkbook = workbookId;
         newState.activeWorkbookData = data.data;
-        newState.activeWorkBookUserDefinedName = data.name;
+        newState.activeWorkbookUserDefinedName = data.name;
       }
       break;
     }

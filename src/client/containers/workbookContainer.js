@@ -82,13 +82,14 @@ class WorkbookContainer extends Component {
     const spreadsheetCells = [];
 
     if (activeWorkbook) {
+      // console.log('Workbook render props: ', this.props);
       activeWB = (
         <div style={{ textAlign: 'center' }}>
           Editing:
           {' '}
           {activeWorkbookUserDefinedName}
           <br />
-          {activeWorkbook}
+          {/* {activeWorkbook} */}
         </div>
       );
       for (let i = 0; i < 100; i += 1) {
