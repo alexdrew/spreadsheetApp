@@ -16,10 +16,10 @@ const workbooksReducer = (state = initialState, action) => {
     // Read all
     case types.UPDATE_TOC: {
       const { data } = action.payload;
-      console.log('Reducer: ', data);
+      // console.log('Reducer: ', data);
       // console.log(`${types.GET_TOC}, not coded`);
       newState = JSON.parse(JSON.stringify(state));
-      newState.data = data;
+      newState.tableOfContents = data;
       break;
     }
     // create one
@@ -45,7 +45,7 @@ const workbooksReducer = (state = initialState, action) => {
     default:
       newState = state;
   }
-  console.log('reducer finished');
+  // console.log('reducer finished');
   return newState;
 };
 

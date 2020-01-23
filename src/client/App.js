@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import child components
-import TableOfContents from './containers/tableOfContents';
+import TableOfContents from './components/tableOfContents';
 
 const App = () => (
   <div className="grid-container">
